@@ -2,7 +2,7 @@
 
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Administrador</title>
+        <title>Home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" >     
@@ -25,10 +25,10 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item ">
-                                    <a class="nav-link active" aria-current="page" th:href="inicio.html">Inicio</a>
+                                    <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Ordenes</a>
+                                    <a class="nav-link" th:href="@{/getCart}">Ordenes</a>
                                 </li>
                                  <li class="nav-item">
                                     <a class="nav-link" href="/administrador">Modo Administrador</a>
@@ -45,12 +45,40 @@
                     </div>
                 </div>
             </nav>
+
+            <header>
+                <!-- Navbar -->
+                <nav class="navbar navbar-expand-lg navbar-light bg-white" style="margin-top: 90px;">
+                    <div class="container-fluid">
+                    </div>
+                </nav>
+                <!-- Navbar -->
+
+                <!-- Background image -->
+                <div
+                    class="p-5 text-center bg-image"
+                    style="
+        background-image: url('images/tienda.jpg');
+         height: 400px;
+                    "
+                    >
+                    <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+                        <div class="d-flex justify-content-center align-items-center h-100">
+                            <div class="text-white">
+                                <h1 class="mb-3">BIENVENIDOS</h1>
+                                <h4 class="mb-3">Tu tienda para todo tipo de alimentos</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Background image -->
+            </header>
             
             <div class="card" style="width: 18rem; margin-top: 100px;" th:each="p: ${productos}" >
                 <img th:src="@{/images/{img} (img=${p.imagen})}" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title" th:text="${p.nombre}"></h5>
-                     <a class="btn btn-info btn-xs" th:href="@{/alimentos/detalleProducto/}+${p.id}" > Ver Producto</a>  
+                     <a class="btn btn-info btn-xs" th:href="@{/detalleProducto/}+${p.id}" > Ver Producto</a>  
                 </div>
             </div>
             

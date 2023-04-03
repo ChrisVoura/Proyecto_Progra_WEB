@@ -24,7 +24,7 @@
                         <div class="offcanvas-body">
                             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                                 <li class="nav-item ">
-                                    <a class="nav-link active" aria-current="page" href="inicio.html">Inicio</a>
+                                    <a class="nav-link active" aria-current="page" href="/">Inicio</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Ordenes</a>
@@ -56,7 +56,8 @@
 
                         </div>
                         <div class="col-lg-6">
-                            <form th:action="@{/alimentos/cart}" method="POST">
+                            <form th:action="@{/cart}" method="POST">
+                                <input type="hidden" th:value="${producto.id}" name="id">
                                 <h2 class="card-title" th:text="${producto.nombre}"></h2>
 
                                 <ul class="list-group">
