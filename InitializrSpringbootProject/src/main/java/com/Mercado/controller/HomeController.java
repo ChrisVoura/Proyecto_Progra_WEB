@@ -4,9 +4,16 @@ package com.Mercado.controller;
 import com.Mercado.entity.DetalleOrden;
 import com.Mercado.entity.Orden;
 import com.Mercado.entity.Producto;
+import com.Mercado.entity.Usuario;
+import com.Mercado.service.IDetalleOrden;
+import com.Mercado.service.IOrdenService;
 import com.Mercado.service.IProductoService;
+import com.Mercado.service.IUsuarioService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,14 +28,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class HomeController {
     @Autowired
     private IProductoService productoservice;
+    @Autowired
+    private IUsuarioService usuarioservice;
+    @Autowired
+    private IOrdenService  ordenservice;      
+    @Autowired
+    private IDetalleOrden detalleordenservice;
    
     List<DetalleOrden> detalles=new ArrayList<DetalleOrden>();
     
     Orden orden=new Orden();
     
     @GetMapping("")
-    public String home(Model model){       
+    public String home(Model model, HttpSession session){       
         model.addAttribute("productos", productoservice.findAll());
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
         return "usuario/home";
     }
     
@@ -82,16 +96,46 @@ public class HomeController {
     }
     
     @GetMapping("/getCart")
-    public String getCart(Model model){
-       
-        
+    public String getCart(Model model, HttpSession session){ 
         model.addAttribute("cart", detalles);
         model.addAttribute("orden", orden);
+        model.addAttribute("sesion", session.getAttribute("idusuario"));
       return "/usuario/carrito";  
     }
     @GetMapping("/orden")
-    public String orden(){
+    public String orden(Model model, HttpSession session){
+        Usuario usuario= usuarioservice.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
+        
+        model.addAttribute("cart", detalles);
+        model.addAttribute("orden", orden);
+        model.addAttribute("usuario", usuario);
         return"usuario/Rorden";
     }
+    @GetMapping("/saveOrden")
+    public String saveOrden(HttpSession session){
+        Date fechaCreacion=new Date();
+        orden.setFechaCreacion(fechaCreacion);
+        orden.setNumero(ordenservice.generarNO());
+        
+        //Usuario
+        Usuario usuario= usuarioservice.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
+        orden.setUsuario(usuario);
+        ordenservice.save(orden);
+        //Detalles
+        for(DetalleOrden dt: detalles){
+          dt.setOrden(orden);
+          detalleordenservice.save(dt);
+        }
+        
+        orden=new Orden();
+        detalles.clear();
+        return "redirect:/";
+    }
     
+    @PostMapping("/search")
+    public String searchP(@RequestParam String nombre, Model model){
+        List<Producto> productos= productoservice.findAll().stream().filter(p -> p.getNombre().contains(nombre)).collect(Collectors.toList());
+        model.addAttribute("productos", productos);
+        return "usuario/home";
+    }
 }

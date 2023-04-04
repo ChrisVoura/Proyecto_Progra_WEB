@@ -29,28 +29,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="#">Ordenes</a>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Mi cuenta
-                                </a>  
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="/administrador">Modo administrador</a></li>
-                                </ul>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Productos
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark">
-                                    <li><a class="dropdown-item" href="/alimentos">Alimentos</a></li>
-                                    <li><a class="dropdown-item" href="Limpieza.html">Limpieza y Hogar</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                    <li><a class="dropdown-item" href="Electro.html">Electrodomesticos</a></li>
-                                    <li><a class="dropdown-item" href="Otros.html">Otros</a></li>
-                                </ul>
-                            </li>
                         </ul>
                         <form class="d-flex mt-3" role="search">
                             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -69,10 +47,9 @@
                                 <h5 class="card-title">
                                     DATOS ORDEN
                                 </h5>
-                                <h6 ></h6>
-                                <h6 ></h6>
-                                <h6 ></h6>
-
+                                <h6 th:text="'Nombre: '+ ${usuario.nombre}" ></h6>
+                                <h6 th:text="'Correo Electronico: '+ ${usuario.email}"></h6>
+                                <h6 th:text="'Dirección: '+ ${usuario.direccion}"></h6>
                                 <h5 class="card-title">
                                     PRODUCTOS
                                 </h5>
@@ -87,12 +64,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr >
-                                                <td ></td>
-                                                <td ></td>
-                                                <td ></td>
-                                                <td ></td>
-
+                                            <tr th:each="rorden : ${cart}">
+                                                <td th:text="${rorden.nombre}"></td>
+                                                <td th:text="${rorden.precio}"></td>
+                                                <td th:text="${rorden.cantidad}"></td>
+                                                <td th:text="${rorden.total}" ></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -106,8 +82,8 @@
                             <h2 class="card-title">Resumen Orden</h2>
 
                             <ul class="list-group">
-                                <li class="list-group-item"><h5 > </h5></li>
-                                <a class="btn btn-dark">Generar</a>
+                                <li class="list-group-item"><h5 th:text=" 'Total:'+ ${orden.total}  "></h5></li>
+                                <a th:href="@{/saveOrden}"  class="btn btn-dark">Generar</a>
                             </ul>
                         </div>
                     </div>

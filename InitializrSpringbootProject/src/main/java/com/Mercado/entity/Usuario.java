@@ -20,7 +20,7 @@ public class Usuario {
     private String nombre;
     private String username;
     private String email;
-    private String dirección;
+    private String direccion;
     private String telefono;
     private String tipo;
     private String password;
@@ -42,7 +42,7 @@ public class Usuario {
         this.nombre = nombre;
         this.username = username;
         this.email = email;
-        this.dirección = dirección;
+        this.direccion = dirección;
         this.telefono = telefono;
         this.tipo = tipo;
         this.password = password;
@@ -80,13 +80,23 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getDirección() {
-        return dirección;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setDirección(String dirección) {
-        this.dirección = dirección;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
+
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
+    }
+
+  
 
     public String getTelefono() {
         return telefono;

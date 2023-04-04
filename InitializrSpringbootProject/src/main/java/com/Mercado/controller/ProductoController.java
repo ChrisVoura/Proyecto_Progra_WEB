@@ -5,11 +5,13 @@ package com.Mercado.controller;
 import com.Mercado.entity.Producto;
 import com.Mercado.entity.Usuario;
 import com.Mercado.service.IProductoService;
+import com.Mercado.service.IUsuarioService;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +28,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductoController {
     @Autowired
     private IProductoService productoservice; 
- 
-
+   @Autowired
+    private IUsuarioService usuarioservice;
     
     @GetMapping("")
     public String Mostrar(Model model){
@@ -43,8 +45,8 @@ public class ProductoController {
         return "productos/crear";
     }
      @PostMapping("/save")
-    public String save(Producto producto,@RequestParam("file")MultipartFile imagen){
-        Usuario u= new Usuario(1,"","","","","","","");
+    public String save(Producto producto,@RequestParam("file")MultipartFile imagen, HttpSession session){
+        Usuario u= usuarioservice.findById(Integer.parseInt(session.getAttribute("idusuario").toString()));
         producto.setUsuario(u);
         if(!imagen.isEmpty()){
             Path directorioImg= Paths.get("src//main//resources//static/images");
