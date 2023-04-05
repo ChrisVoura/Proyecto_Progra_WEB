@@ -65,6 +65,12 @@
                                  <li class="nav-item">
                                     <a class="nav-link" href="#">Mi cuenta</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/usuario/cerrar}">Cerrar Session</a>
+                                </li>
+                                  <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/usuario/compras}">Lista de Compras</a>
+                                </li>
                             </ul>
                             <form class="d-flex mt-3" role="search" method="post" th:action="@{/search}">
                                 <input class="form-control me-2" type="search" name="nombre" placeholder="Search" aria-label="Search">

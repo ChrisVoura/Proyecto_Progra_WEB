@@ -2,6 +2,7 @@
 package com.Mercado.service;
 
 import com.Mercado.entity.Orden;
+import com.Mercado.entity.Usuario;
 import com.Mercado.repository.OrdenRepository;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class OrdenService implements IOrdenService{
      return ordenrepository.findAll();
     }
     
+    @Override
     public String generarNO(){
       int num=0;
       String numeroCon=""; 
@@ -53,5 +55,10 @@ public class OrdenService implements IOrdenService{
       
       
         return numeroCon;
+    }
+
+    @Override
+    public List<Orden> findByUsuario(Usuario usuario) {
+       return ordenrepository.findByUsuario(usuario);
     }
 }
